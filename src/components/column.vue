@@ -7,7 +7,10 @@ const emit = defineEmits(['click-add'])
   <div class="column">
     <h2>{{ column.title }}</h2>
     <slot></slot>
-    <v-btn @click="$emit('click-add', column.id)" variant="plain"
+    <v-btn
+      :aria-label="'Add a card to ' + column.title"
+      @click="$emit('click-add', column.id)"
+      variant="plain"
       ><v-icon icon="mdi-plus"></v-icon>Add a card</v-btn
     >
   </div>
