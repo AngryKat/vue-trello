@@ -1,4 +1,4 @@
-export const User = ['admin', 'Sam', 'Miranda'] as const
+export const User = ['admin', 'Sam', 'Miranda', 'Charlotte'] as const
 export type User = (typeof User)[number]
 export const Priority = Object.freeze({
   low: 'Low',
@@ -21,4 +21,10 @@ export type Task = {
   reporter: User
   assignees: User[]
   priority: Priority
+}
+
+export type ActionButton = {
+  icon: string
+  ariaLabel: string
+  click: () => void
 }

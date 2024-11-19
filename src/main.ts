@@ -13,6 +13,36 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import App from './App.vue'
 
+sessionStorage.setItem(
+  'tasks',
+  JSON.stringify([
+    {
+      id: 'dasff3vrw',
+      title: 'Fix bugs',
+      status: 'todo',
+      reporter: 'Miranda',
+      assignees: ['Charlotte'],
+      priority: 'high',
+    },
+    {
+      id: 'f2lgn23knf',
+      title: 'Implement form',
+      status: 'inProgress',
+      reporter: 'Miranda',
+      assignees: ['Sam', 'Miranda'],
+      priority: 'medium',
+    },
+    {
+      id: 'f32gm2',
+      title: 'Init vue project',
+      status: 'done',
+      reporter: 'admin',
+      assignees: ['Miranda', 'Sam', 'Charlotte'],
+      priority: 'low',
+    },
+  ]),
+)
+
 const vuetify = createVuetify({
   components,
   directives,

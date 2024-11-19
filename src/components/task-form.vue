@@ -2,12 +2,15 @@
 import { Priority, TaskStatus, User, type Task } from '@/types'
 import { computed, ref } from 'vue'
 
-const { title, initialFormData } = defineProps<{
-  title: string
+const { initialFormData } = defineProps<{
   initialFormData: Task
 }>()
-const emit = defineEmits(['submit'])
+const emit = defineEmits<{
+  (e: 'submit', formData: Task): void
+  (e: 'cancel'): void
+}>()
 const formData = ref<Task>(initialFormData)
+const formRef = ref()
 const statusOptions = computed(() => {
   return Object.entries(TaskStatus).map(([value, title]) => ({
     title,
@@ -26,12 +29,22 @@ const priorityOptions = computed(() => {
     value,
   }))
 })
+
+async function submit() {
+  const { valid } = await formRef.value.validate()
+  if (!valid) return
+  emit('submit', formData.value)
+}
 </script>
 <template>
   <v-card class="card">
-    <h3>{{ title }}</h3>
-    <v-form @submit.prevent="emit('submit', formData)">
-      <v-text-field label="Title" v-model="formData.title"></v-text-field>
+    <v-form ref="formRef" @submit.prevent="submit">
+      <v-text-field
+        autofocus
+        label="Title"
+        v-model="formData.title"
+        :rules="[(v) => !!v || 'Title is required']"
+      ></v-text-field>
       <v-autocomplete
         label="Status"
         :items="statusOptions"
@@ -59,6 +72,7 @@ const priorityOptions = computed(() => {
       ></v-autocomplete>
       <v-card-actions>
         <v-btn type="submit" variant="outlined">Save</v-btn>
+        <v-btn type="button" @click="$emit('cancel')">Cancel</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
