@@ -6,16 +6,10 @@ import { useTasksStore } from './stores/tasks'
 import draggable from 'vuedraggable'
 import TaskForm from './components/task-form.vue'
 import Column from './components/column.vue'
-import TaskFullViewCard from './components/task-full-view-card.vue'
 import type { ActionButton, Task, TaskStatus } from './types'
 
 function getTaskCardActionButtons(taskId: string): ActionButton[] {
   return [
-    // {
-    //   icon: 'mdi-eye',
-    //   ariaLabel: 'View',
-    //   click: () => clickView(taskId),
-    // },
     {
       icon: 'mdi-pencil',
       ariaLabel: 'Edit',
@@ -62,11 +56,6 @@ function submit(formData: Task) {
   const handler = tasksStore[editMode.value ? 'edit' : 'add']
   handler(formData)
   modalVisible.value = false
-}
-
-function clickView(taskId: string) {
-  viewTaskId.value = taskId
-  modalVisible.value = true
 }
 
 function clickAdd(columnId: TaskStatus) {
